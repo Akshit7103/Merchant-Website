@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Merchant Security Checker</h1>
+                <p class="lead mb-4">Analyze merchant websites for compliance, security, and risk assessment. Check for privacy policies, terms of service, contact information, and more.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-white border-bottom-0">
+                    <h3 class="card-title mb-0"><i class="fas fa-search me-2"></i>Start Your Analysis</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('check_merchants') }}" enctype="multipart/form-data">
+                        <!-- URL Input Section -->
+                        <div class="mb-4">
+                            <label for="urls" class="form-label">
+                                <i class="fas fa-link me-2"></i>Enter URLs (one per line)
+                            </label>
+                            <textarea class="form-control" id="urls" name="urls" rows="6" 
+                                      placeholder="https://example.com
+https://shop.example.com
+https://merchant.example.com"></textarea>
+                            <div class="form-text">Enter one URL per line. URLs can include http:// or https:// or just the domain name.</div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <span class="badge bg-secondary">OR</span>
+                        </div>
+
+                        <!-- File Upload Section -->
+                        <div class="mb-4">
+                            <label for="file" class="form-label">
+                                <i class="fas fa-upload me-2"></i>Upload CSV File
+                            </label>
+                            <div class="upload-area">
+                                <input type="file" class="form-control" id="file" name="file" accept=".csv,.txt">
+                                <div class="mt-2">
+                                    <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
+                                    <p class="text-muted mt-2">Upload a CSV or TXT file with one URL per line</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-shield-alt me-2"></i>Start Analysis
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+        <div class="col-md-4 text-center mb-4">
+            <div class="feature-icon">
+                <i class="fas fa-shield-check"></i>
+            </div>
+            <h5>Security Validation</h5>
+            <p class="text-muted">Checks for HTTPS, prohibited content, and security compliance</p>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="feature-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <h5>Policy Verification</h5>
+            <p class="text-muted">Validates presence of privacy policy, terms of service, and refund policy</p>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h5>Risk Assessment</h5>
+            <p class="text-muted">Calculates risk scores and provides detailed compliance reports</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('file').addEventListener('change', function(e) {
+    if (e.target.files.length > 0) {
+        document.getElementById('urls').value = '';
+    }
+});
+
+document.getElementById('urls').addEventListener('input', function(e) {
+    if (e.target.value.trim()) {
+        document.getElementById('file').value = '';
+    }
+});
+</script>
+{% endblock %}
